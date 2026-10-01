@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Sophia Development</title>
+  <meta name="description" content="Sophia Development — Engineering & Software Studio">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/instrument.css">
+  <link rel="stylesheet" href="css/sections.css">
+</head>
+<body>
+
+  <!-- ================= ГЛАВНЫЙ ИНСТРУМЕНТАЛЬНЫЙ КАНВАС ================= -->
+  <div class="viewport-instrument" aria-hidden="true">
+    <canvas id="ascii-stage"></canvas>
+    <div class="scanline-overlay"></div>
+    <div class="grid-crosshairs"></div>
+  </div>
+
+  <!-- ================= СТАТУСНЫЙ ИНДИКАТОР ПРИБОРА ================= -->
+  <aside class="instrument-hud" aria-label="Панель состояния">
+    <div class="hud-item hud-left">
+      <span class="hud-label">SYS_STATE</span>
+      <span class="hud-val hud-blink">ACTIVE</span>
+    </div>
+
+    <!-- Индикатор текущей фигуры (кликабелен для смены) -->
+    <button id="figure-switcher" class="figure-indicator" type="button" title="Переключить расчетную модель">
+      <span class="figure-indicator-label">MODEL</span>
+      <span id="figure-index" class="figure-indicator-value">[ 01 / 04 ]</span>
+      <span id="figure-name" class="figure-indicator-name">PHYLLOTAXIS</span>
+    </button>
+
+    <div class="hud-item hud-right">
+      <span class="hud-label">GRID</span>
+      <span class="hud-val">8×14 MONO</span>
+    </div>
+  </aside>
+
+  <!-- ================= ПРАВАЯ НАВИГАЦИЯ (ТОЧКИ) ================= -->
+  <nav class="side-nav" aria-label="Навигация по разделам">
+    <ul class="nav-track">
+      <li class="nav-item">
+        <a href="#hero" class="nav-dot active" data-index="0">
+          <span class="nav-label">01 // CORE</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#who" class="nav-dot" data-index="1">
+          <span class="nav-label">02 // КТО МЫ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#craft" class="nav-dot" data-index="2">
+          <span class="nav-label">03 // ЧТО ДЕЛАЕМ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#dialogue" class="nav-dot" data-index="3">
+          <span class="nav-label">04 // РАЗГОВОР</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#contacts" class="nav-dot" data-index="4">
+          <span class="nav-label">05 // КОНТАКТЫ</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ================= ОСНОВНЫЕ СЕКЦИИ ================= -->
+  <main class="content-scroll-container">
+
+    <!-- СЕКЦИЯ 1: HERO -->
+    <section id="hero" class="panel-section hero-section" data-section-index="0">
+      <div class="hero-left-anchor">
+        <h1 class="brand-title">Sophia Development</h1>
+        <p id="figure-quote" class="brand-quote">
+          <!-- Цитата подставляется динамически из модуля активной фигуры -->
+          "Одни нашли одних."
+        </p>
+      </div>
+
+      <div class="hero-bottom-hint">
+        <span>drag — вращение · wheel / pinch — масштаб · dblclick — сброс</span>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: КТО МЫ -->
+    <section id="who" class="panel-section readable-section" data-section-index="1">
+      <div class="section-card">
+        <header class="section-badge">02 // ORIGIN</header>
+        
+        <h2 class="section-headline">
+          <!-- [COPY:kto-my-headline] -->
+          [kto-my-headline]
+        </h2>
+
+        <div class="section-lines">
+          <!-- [COPY:kto-my-line-1] -->
+          <p class="line">[kto-my-line-1]</p>
+          <!-- [COPY:kto-my-line-2] -->
+          <p class="line">[kto-my-line-2]</p>
+          <!-- [COPY:kto-my-line-3] -->
+          <p class="line">[kto-my-line-3]</p>
+          <!-- [COPY:kto-my-line-4] -->
+          <p class="line">[kto-my-line-4]</p>
+        </div>
+
+        <div class="section-footnote">
+          <!-- [COPY:kto-my-footnote] -->
+          <span>[kto-my-footnote]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ЧТО ДЕЛАЕМ И КАК -->
+    <section id="craft" class="panel-section readable-section" data-section-index="2">
+      <div class="section-card">
+        <header class="section-badge">03 // EXECUTION</header>
+        
+        <h2 class="section-headline">
+          <!-- [COPY:chto-delaem-headline] -->
+          [chto-delaem-headline]
+        </h2>
+
+        <div class="section-lines">
+          <!-- [COPY:chto-delaem-line-1] -->
+          <p class="line">[chto-delaem-line-1]</p>
+          <!-- [COPY:chto-delaem-line-2] -->
+          <p class="line">[chto-delaem-line-2]</p>
+          <!-- [COPY:chto-delaem-line-3] -->
+          <p class="line">[chto-delaem-line-3]</p>
+          <!-- [COPY:chto-delaem-line-4] -->
+          <p class="line">[chto-delaem-line-4]</p>
+        </div>
+
+        <div class="section-principle">
+          <!-- [COPY:chto-delaem-principle] -->
+          <code>[chto-delaem-principle]</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 4: РАЗГОВОР -->
+    <section id="dialogue" class="panel-section dialogue-section" data-section-index="3">
+      <div class="dialogue-wrapper" id="dialogue-panel">
+        
+        <!-- Окно развернутого диалога (скрыто до первого ввода) -->
+        <div class="dialogue-window" id="dialogue-window" hidden>
+          <div class="dialogue-header">
+            <span class="status-tag">SESSION // STREAM_OPEN</span>
+            <button class="dialogue-close" id="dialogue-reset-btn" type="button" title="Очистить и свернуть">
+              [СБРОС]
+            </button>
+          </div>
+          
+          <div class="dialogue-feed" id="dialogue-feed" role="log" aria-live="polite">
+            <!-- Сообщения генерируются модулем js/dialogue.js -->
+          </div>
+
+          <div class="dialogue-chips" id="dialogue-chips">
+            <!-- Подсказки / варианты быстрого уточнения -->
+          </div>
+        </div>
+
+        <!-- Поле ввода (на весь экран/блок, трансформируется в инпут диалога) -->
+        <div class="input-container" id="input-container">
+          <label for="dialogue-input" class="sr-only">Опишите задачу</label>
+          <input 
+            type="text" 
+            id="dialogue-input" 
+            class="prime-input" 
+            placeholder="Что хотите реализовать?" 
+            autocomplete="off" 
+            spellcheck="false"
+          />
+          <div class="input-corner-tl"></div>
+          <div class="input-corner-br"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 5: КОНТАКТЫ -->
+    <section id="contacts" class="panel-section contacts-section" data-section-index="4">
+      <div class="section-card contacts-card">
+        <header class="section-badge">05 // CHANNELS</header>
+        
+        <h2 class="section-headline">
+          <!-- [COPY:kontakty-headline] -->
+          [kontakty-headline]
+        </h2>
+
+        <div class="contact-links-grid">
+          <!-- [COPY:kontakty-tg-*] -->
+          <a href="https://t.me/your_handle" target="_blank" rel="noopener noreferrer" class="contact-btn">
+            <span class="btn-meta">TG //</span>
+            <span class="btn-label">[Telegram]</span>
+          </a>
+
+          <!-- [COPY:kontakty-vk-*] -->
+          <a href="https://vk.com/your_page" target="_blank" rel="noopener noreferrer" class="contact-btn">
+            <span class="btn-meta">VK //</span>
+            <span class="btn-label">[ВКонтакте]</span>
+          </a>
+
+          <!-- [COPY:kontakty-mail-*] -->
+          <a href="mailto:team@sophia.dev" class="contact-btn">
+            <span class="btn-meta">MAIL //</span>
+            <span class="btn-label">[Почта]</span>
+          </a>
+
+          <!-- [COPY:kontakty-phone-*] -->
+          <a href="tel:+79990000000" class="contact-btn">
+            <span class="btn-meta">DIRECT //</span>
+            <span class="btn-label">[Номер]</span>
+          </a>
+        </div>
+
+        <div class="contacts-footer">
+          <!-- [COPY:kontakty-status] -->
+          <span class="mono-dim">[kontakty-status]</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
