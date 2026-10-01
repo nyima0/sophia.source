@@ -133,6 +133,7 @@ export default {
     }
 
     const canvas = ctx.canvas;
+
     const onMouseDown = (e) => {
       dragging = true; lastX = e.clientX; lastY = e.clientY; velX = velY = 0;
       document.body.classList.add('canvas-dragging');
@@ -145,7 +146,10 @@ export default {
       userRotX = Math.max(-1, Math.min(1, userRotX + dy * 0.01));
       velY = dx * 0.01; velX = dy * 0.01;
     };
-    const onMouseUp = () => { dragging = false; document.body.classList.remove('canvas-dragging'); };
+    const onMouseUp = () => {
+      dragging = false;
+      document.body.classList.remove('canvas-dragging');
+    };
     const onWheel = (e) => {
       e.preventDefault();
       zoom = Math.max(0.3, Math.min(4, zoom * Math.exp(-e.deltaY * 0.001)));
@@ -165,8 +169,64 @@ export default {
         velX = velY = 0;
       } else if (e.touches.length === 2) {
         touchMode = 'pinch'; dragging = false;
-        pinchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        pinchStartDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
         pinchStartZoom = zoom;
       }
     };
-    const onTouchMove =
+    const onTouchMove = (e) => {
+      e.preventDefault();
+      if (touchMode === 'drag' && e.touches.length === 1) {
+        const dx = e.touches[0].clientX - lastX;
+        const dy = e.touches[0].clientY - lastY;
+        lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+        userRotY = Math.max(-2, Math.min(2, userRotY + dx * 0.012));
+        userRotX = Math.max(-1, Math.min(1, userRotX + dy * 0.012));
+        velY = dx * 0.012; velX = dy * 0.012;
+      } else if (touchMode === 'pinch' && e.touches.length === 2) {
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (pinchStartDist > 0) {
+          zoom = Math.max(0.3, Math.min(4, pinchStartZoom * (dist / pinchStartDist)));
+        }
+      }
+    };
+    const onTouchEnd = (e) => {
+      e.preventDefault();
+      if (e.touches.length === 0) {
+        touchMode = null; dragging = false;
+      } else if (e.touches.length === 1) {
+        touchMode = 'drag'; dragging = true;
+        lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+      }
+    };
+
+    canvas.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+    canvas.addEventListener('dblclick', onDblClick);
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd, { passive: false });
+
+    animId = requestAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      canvas.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      canvas.removeEventListener('wheel', onWheel);
+      canvas.removeEventListener('dblclick', onDblClick);
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      document.body.classList.remove('canvas-dragging');
+    };
+  }
+};
