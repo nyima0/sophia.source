@@ -1,0 +1,196 @@
+/* ============================================================
+   INSTRUMENT LAYER: Канвас, сетка, оверлеи и HUD
+============================================================ */
+
+.viewport-instrument {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+body.canvas-dragging .viewport-instrument {
+  cursor: grabbing;
+}
+
+#ascii-stage {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scanline-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+.grid-crosshairs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 16px 16px, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at calc(100% - 16px) 16px, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 16px calc(100% - 16px), rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at calc(100% - 16px) calc(100% - 16px), rgba(255,255,255,0.06) 1px, transparent 1px);
+}
+
+/* --- HUD & STATUS BAR --- */
+.instrument-hud {
+  position: fixed;
+  top: 14px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.hud-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hud-label {
+  color: #4f5860;
+}
+
+.hud-val {
+  color: var(--text-main);
+}
+
+.hud-blink {
+  animation: pulse-dot 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* Индикатор модели (кликабелен) */
+.figure-indicator {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  background: rgba(14, 17, 22, 0.7);
+  border: 1px solid var(--bg-panel-border);
+  border-radius: 2px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.figure-indicator:hover {
+  border-color: var(--
+.figure-indicator:hover {
+  border-color: var(--bg-panel-border-bright);
+  background: rgba(22, 27, 34, 0.9);
+}
+
+.figure-indicator-label {
+  color: #4f5860;
+  font-size: 10px;
+}
+
+.figure-indicator-value {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.figure-indicator-name {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
+/* --- ВЕРТИКАЛЬНАЯ НАВИГАЦИЯ СПРАВА --- */
+.side-nav {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+.nav-track {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nav-dot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.nav-dot::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  background-color: var(--text-dim);
+  border-radius: 1px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-label {
+  position: absolute;
+  right: 18px;
+  font-size: 11px;
+  color: var(--text-dim);
+  opacity: 0;
+  transform: translateX(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.nav-dot:hover .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-dot.active::after {
+  background-color: var(--text-bright);
+  transform: scale(1.6);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.nav-dot.active .nav-label {
+  color: var(--text-bright);
+}
