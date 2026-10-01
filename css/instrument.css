@@ -107,8 +107,6 @@ body.canvas-dragging .viewport-instrument {
 }
 
 .figure-indicator:hover {
-  border-color: var(--
-.figure-indicator:hover {
   border-color: var(--bg-panel-border-bright);
   background: rgba(22, 27, 34, 0.9);
 }
